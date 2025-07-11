@@ -1,11 +1,13 @@
 import readline from 'node:readline/promises';
-import { agent } from './src/agent.js';
+import { ChatAgent } from './src/agents/ChatAgent.js';
 
 async function main() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
+
+  const agent = new ChatAgent();
 
   console.log('\nType your question for the agent (type "exit" to quit):\n');
 
@@ -16,7 +18,7 @@ async function main() {
       break;
     }
 
-    const { answer, tokens } = await agent(userInput);
+    const { answer, tokens } = await agent.send(userInput);
     console.log('\nResponse from the agent:\n', answer);
     console.log('\nToken usage:', tokens);
   }
