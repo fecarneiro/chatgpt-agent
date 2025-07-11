@@ -1,5 +1,5 @@
 import readline from 'node:readline/promises';
-import { ChatAgent } from './src/agents/ChatAgent.js';
+import { SessionChatAgent } from './src/agents/sessionChatAgent.js';
 
 async function main() {
   const rl = readline.createInterface({
@@ -7,7 +7,7 @@ async function main() {
     output: process.stdout,
   });
 
-  const agent = new ChatAgent();
+  const agent = new SessionChatAgent();
 
   console.log('\nType your question for the agent (type "exit" to quit):\n');
 

@@ -1,6 +1,6 @@
 import { getOpenAIResponse } from '../openaiService.js';
 
-export class ChatAgent {
+export class SessionChatAgent {
   constructor(systemPrompt = 'You are a helpful assistant.') {
     this.chatHistory = [{ role: 'system', content: systemPrompt }];
   }
