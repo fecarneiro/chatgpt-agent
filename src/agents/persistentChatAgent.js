@@ -6,19 +6,15 @@ const DB_FILE = './db/chatHistory.json';
 
 export class PersistentChatAgent {
   constructor(systemPrompt = 'You are a helpful assistant.') {
-    this.db = new Low(new JSONFile(DB_FILE));
     this.systemPrompt = systemPrompt;
+    this.db = new Low(new JSONFile(DB_FILE), {
+      chatHistory: [{ role: 'system', content: this.systemPrompt }],
+    });
     this.chatHistory = null;
   }
 
   async init() {
     await this.db.read();
-    if (!this.db.data) {
-      this.db.data = {
-        chatHistory: [{ role: 'system', content: this.systemPrompt }],
-      };
-      await this.db.write();
-    }
     this.chatHistory = this.db.data.chatHistory;
   }
 
