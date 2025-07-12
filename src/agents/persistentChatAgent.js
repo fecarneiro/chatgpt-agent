@@ -12,9 +12,13 @@ export class PersistentChatAgent {
   }
 
   async init() {
-    this.db.data = this.db.data || {
-      chatHistory: [{ role: 'system', content: this.systemPrompt }],
-    };
+    await this.db.read();
+    if (!this.db.data) {
+      this.db.data = {
+        chatHistory: [{ role: 'system', content: this.systemPrompt }],
+      };
+      await this.db.write();
+    }
     this.chatHistory = this.db.data.chatHistory;
   }
 
@@ -23,6 +27,7 @@ export class PersistentChatAgent {
     const { answer, tokens } = await getOpenAIResponse(this.chatHistory);
     this.chatHistory.push({ role: 'assistant', content: answer });
     await this.saveHistory();
+    return { answer, tokens };
   }
 
   async saveHistory() {
