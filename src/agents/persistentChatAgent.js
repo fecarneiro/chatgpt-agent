@@ -4,7 +4,7 @@ import { JSONFile } from 'lowdb/node';
 
 const DB_FILE = './db/chatHistory.json';
 
-export class SessionChatAgent {
+export class PersistentChatAgent {
   constructor(systemPrompt = 'You are a helpful assistant.') {
     this.db = new Low(new JSONFile(DB_FILE));
     this.systemPrompt = systemPrompt;
